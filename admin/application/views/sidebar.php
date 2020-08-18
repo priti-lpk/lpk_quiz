@@ -40,6 +40,9 @@
             <li>
                 <a href="<?php echo base_url('quiz_schedule') ?>" class="waves-effect"><i class="mdi mdi-calendar-check"></i><span> Quiz Schedule </span></a>
             </li>
+            <li>
+                <a href="<?php echo base_url('daily_mission') ?>" class="waves-effect"><i class="mdi mdi-calendar-check"></i><span> Daily Mission </span></a>
+            </li>
         </ul>
 
     </div>
