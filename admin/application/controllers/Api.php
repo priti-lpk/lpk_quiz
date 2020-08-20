@@ -129,6 +129,16 @@ class Api extends CI_Controller {
                 }
                 die();
             }
+            if ($_POST['name'] == 'view_mission') {
+                $this->load->model('api_quiz');
+                $data = $this->api_quiz->quiz_mission();
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
+                } else {
+                    echo json_encode(array("msg" => "data not found"));
+                }
+                die();
+            }
             // Get random 10 question...
             if ($_POST['name'] == 'question_result') {
                 $this->load->model('api_quiz');

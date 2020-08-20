@@ -178,4 +178,14 @@ class api_quiz extends CI_Model {
         }
     }
 
+    function quiz_mission() {
+        $query = $this->db->query("SELECT mc.main_cat_name,sc.sub_cat_name,daily_mission.time,daily_mission.score FROM `daily_mission` INNER JOIN main_category mc ON daily_mission.main_cat_id=mc.id INNER JOIN sub_category sc ON daily_mission.sub_cat_id=sc.id ");
+        $result = $query->result();
+        $data = array();
+        foreach ($result as $rows) {
+            $data[] = $rows;
+        }
+        return $data;
+    }
+
 }
