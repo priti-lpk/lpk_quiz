@@ -24,7 +24,7 @@ class api_quiz extends CI_Model {
     }
 
     function all_question() {
-        $query = $this->db->query("SELECT q.id,m.main_cat_name,s.sub_cat_name,t.tag_name,c.cname,st.state_name,q.image,q.question,q.option_a,q.option_b,q.option_c,q.option_d,q.answer,q.date,IFNULL(u.username,'Admin') as username from question_master q inner join main_category m on q.main_cat_id=m.id inner join sub_category s on q.sub_cat_id=s.id INNER join countries c on q.country_id=c.id INNER join tag_list t on q.tag_id=t.id INNER JOIN states st on q.state_id=st.id left join user_master u on q.user=u.id");
+        $query = $this->db->query("SELECT q.id,m.main_cat_name,s.sub_cat_name,t.tag_name,c.cname,st.state_name,q.image,q.question,q.option_a,q.option_b,q.option_c,q.option_d,q.answer,q.date,IFNULL(u.username,'Admin') as username,q.type from question_master q inner join main_category m on q.main_cat_id=m.id inner join sub_category s on q.sub_cat_id=s.id INNER join countries c on q.country_id=c.id INNER join tag_list t on q.tag_id=t.id INNER JOIN states st on q.state_id=st.id left join user_master u on q.user=u.id");
         $result = $query->result();
         $data = array();
         foreach ($result as $rows) {

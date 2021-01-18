@@ -35,8 +35,6 @@ class Add_question extends CI_Controller {
             $ext = pathinfo($filename, PATHINFO_EXTENSION);
             $data = $this->question->getquestionLastId();
             $image = (($data[0]->id) + 1) . "." . $ext;
-
-
             $config['upload_path'] = './Images/question/'; //The path where the image will be save
             $config['allowed_types'] = 'jpg|jpeg|png|gif'; //Images extensions accepted
             $config['file_name'] = $image;
@@ -58,7 +56,8 @@ class Add_question extends CI_Controller {
                 'option_c' => $this->input->post('option_c'),
                 'option_d' => $this->input->post('option_d'),
                 'answer' => $this->input->post('answer'),
-                'user' => $this->input->post('user')
+                'user' => $this->input->post('user'),
+                'type' => $this->input->post('type')
             );
 //            call saverecords method of Hello_Model and pass variables as parameter
             $this->question->Insertquestion($data);
@@ -93,7 +92,8 @@ class Add_question extends CI_Controller {
                     "option_c" => $this->input->post('option_c'),
                     "option_d" => $this->input->post('option_d'),
                     "answer" => $this->input->post('answer'),
-                    "user" => $this->input->post('user')
+                    "user" => $this->input->post('user'),
+                    'type' => $this->input->post('type')
                 );
                 $this->question->update_question_master($data, $this->input->post("id"));
                 redirect(base_url(Add_question));
@@ -110,7 +110,8 @@ class Add_question extends CI_Controller {
                     "option_c" => $this->input->post('option_c'),
                     "option_d" => $this->input->post('option_d'),
                     "answer" => $this->input->post('answer'),
-                    "user" => $this->input->post('user')
+                    "user" => $this->input->post('user'),
+                    'type' => $this->input->post('type')
                 );
                 $this->question->update_question_master($data, $this->input->post("id"));
                 redirect(base_url(add_question));

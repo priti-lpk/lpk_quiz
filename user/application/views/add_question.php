@@ -153,6 +153,24 @@
                                                         <input type = "file" id = "image" name = "image" class = "form-control filestyle" data-input = "false" data-buttonname = "btn-secondary">
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <label for="example-text-input" class="col-sm-2 col-form-label">Type</label>
+                                                    <div class="col-sm-10" id="state_list">
+                                                        <select class="form-control select2" name="type" id="type" required="" onchange="typechange();">
+                                                            <option value="0">Select Question Type</option>
+                                                            <option<?php
+                                                            if (isset($edit_question)) {
+                                                                echo $edit_question[0]['type'] == '1' ? ' selected="selected"' : '';
+                                                            }
+                                                            ?> value = '1'>True/False</option>
+                                                            <option<?php
+                                                            if (isset($edit_question)) {
+                                                                echo $edit_question[0]['type'] == '2' ? ' selected="selected"' : '';
+                                                            }
+                                                            ?> value = '2'>General</option>
+                                                        </select> 
+                                                    </div>
+                                                </div>
                                                 <div class = "form-group row">
                                                     <label for = "example-text-input" class = "col-sm-2 col-form-label">Question</label>
                                                     <div class = "col-sm-10">
@@ -174,7 +192,7 @@
                                                         <input class = "form-control" type = "text" placeholder = "Option B" name = "option_b" id = "option_b" value="<?php echo (isset($edit_question) ? $edit_question[0]['option_b'] : ''); ?>" required = "">
                                                     </div>
                                                 </div>
-                                                <div class = "form-group row">
+                                                <div class = "form-group row" id="vis">
                                                     <label for = "example-text-input" class = "col-sm-2 col-form-label">Option C</label>
                                                     <div class = "col-sm-4">
                                                         <input class = "form-control" type = "text" placeholder = "Option C" name = "option_c" id = "option_c" value="<?php echo (isset($edit_question) ? $edit_question[0]['option_c'] : ''); ?>" required = "">
@@ -190,24 +208,24 @@
                                                         <select class="form-control select2" name="answer" id="answer" required="">
                                                             <option<?php
                                                             if (isset($edit_question)) {
-                                                                echo $edit_question[0]['answer'] == 'Option A' ? ' selected="selected"' : '';
+                                                                echo $edit_question[0]['answer'] == 'A' ? ' selected="selected"' : '';
                                                             }
-                                                            ?> value = 'Option A'>Option A</option>
+                                                            ?> value = 'A'>Option A</option>
                                                             <option<?php
                                                             if (isset($edit_question)) {
-                                                                echo $edit_question[0]['answer'] == 'Option B' ? ' selected="selected"' : '';
+                                                                echo $edit_question[0]['answer'] == 'B' ? ' selected="selected"' : '';
                                                             }
-                                                            ?> value = 'Option B'>Option B</option>
+                                                            ?> value = 'B'>Option B</option>
                                                             <option<?php
                                                             if (isset($edit_question)) {
-                                                                echo $edit_question[0]['answer'] == 'Option C' ? ' selected="selected"' : '';
+                                                                echo $edit_question[0]['answer'] == 'C' ? ' selected="selected"' : '';
                                                             }
-                                                            ?> value = 'Option C'>Option C</option>
+                                                            ?> value = 'C'>Option C</option>
                                                             <option<?php
                                                             if (isset($edit_question)) {
-                                                                echo $edit_question[0]['answer'] == 'Option D' ? ' selected="selected"' : '';
+                                                                echo $edit_question[0]['answer'] == 'D' ? ' selected="selected"' : '';
                                                             }
-                                                            ?> value = 'Option D'>Option D</option>
+                                                            ?> value = 'D'>Option D</option>
                                                         </select> 
                                                     </div>
                                                 </div>
@@ -454,7 +472,43 @@
             }
         </script>
         <script>
+            var edit_type = "<?= isset($edit_question) ? $edit_question[0]['type'] : '' ?>";
+            if (edit_type == '1') {
+                document.getElementById("vis").style.display = "none";
+                $('#answer option[value="Option C"]').prop('disabled', 'true');
+                $('#answer option[value="Option D"]').prop('disabled', 'true');
+                $(".select2").select2();
+            }
+            if (edit_type == '2') {
+                document.getElementById("vis").style.display = "";
+                $('#answer option[value="Option C"]').removeAttr('disabled');
+                $('#answer option[value="Option D"]').removeAttr('disabled');
 
+                $(".select2").select2();
+            }
+            function typechange()
+            {
+                var type = document.getElementById("type").value;
+                if (type == '1') {
+                    document.getElementById("vis").style.display = "none";
+                    $('#answer option[value="Option C"]').prop('disabled', 'true');
+                    $('#answer option[value="Option D"]').prop('disabled', 'true');
+                    $(".select2").select2();
+                }
+                if (type == '2') {
+                    document.getElementById("vis").style.display = "";
+                    $('#answer option[value="Option C"]').removeAttr('disabled');
+                    $('#answer option[value="Option D"]').removeAttr('disabled');
+                    $(".select2").select2();
+                }
+                if (type == '0') {
+                    document.getElementById("vis").style.display = "";
+                    $('#answer option[value="Option C"]').prop('disabled', 'true');
+                    $('#answer option[value="Option D"]').prop('disabled', 'true');
+                    $(".select2").select2();
+                }
+            }
+            ;
         </script>
     </body>
 

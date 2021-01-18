@@ -20,6 +20,7 @@
                     <li><a href="<?php echo base_url('Add_state') ?>">Add State</a></li>
                     <li><a href="<?php echo base_url('Add_user') ?>">Add User</a></li>
                     <li><a href="<?php echo base_url('Add_question') ?>">Add Question</a></li>
+                    <li><a href="<?php echo base_url('Add_question_csv') ?>">Add Question Using CSV</a></li>
                 </ul>
             </li>
             <li>
