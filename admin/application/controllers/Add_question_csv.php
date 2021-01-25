@@ -79,66 +79,6 @@ class Add_question_csv extends CI_Controller {
         }
     }
 
-    public function update_data() {
-        $id = $this->uri->segment(3);
-        $this->load->model('question');
-        $data = $this->question->update_question($id);
-        $data['edit_question'] = $this->question->update_question($id);
-        $data['all_data'] = $this->question->fetch_data();
-        $data['tag'] = $this->question->get_tag();
-        $data['main_category'] = $this->question->fetch_main_category_data();
-        $data['sub_category'] = $this->question->fetch_sub_category_data1($id);
-        $data['countries'] = $this->question->fetch_country();
-        $county_id = $data[0]['country_id'];
-        $data['update_state'] = $this->question->update_state($county_id);
-        $this->load->view('add_question', $data);
-    }
-
-    public function delete_data() {
-        $id = $this->uri->segment(3);
-        $this->load->model('question');
-        $query_get_image = $this->db->get_where('question_master', array('id' => $id));
-        foreach ($query_get_image->result() as $record) {
-// delete file, if exists...
-            $filename = "./Images/question/" . $record->image;
-            if (file_exists($filename)) {
-                unlink($filename);
-            }
-            $this->question->delete_question($id);
-            redirect(base_url(Add_question));
-        }
-    }
-
-    public function get_scat() {
-
-        $this->load->model('question');
-        $main_cat_id = $this->input->post('main_cat_id');
-
-        $val = $this->question->getscat($main_cat_id);
-        $output = '<select class="form-control select2 chosen" name="sub_cat_id" id="sub_cat_id" required="">';
-        $output .= '<option>Select Sub Category</option>';
-        foreach ($val as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->sub_cat_name . '</option>';
-        }
-        $output .= '</select>';
-        echo $output;
-    }
-
-    public function getstate() {
-
-        $this->load->model('question');
-        $countries = $this->input->post('countries');
-
-        $val = $this->question->get_state($countries);
-        $output = '<select name = "state_id" id = "states" class = "form-control select2 chosen" required>';
-        $output .= '<option>Select State</option>';
-        foreach ($val as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->state_name . '</option>';
-        }
-        $output .= '</select>';
-        echo $output;
-    }
-
 }
 ?>
 <script type="text/javascript">

@@ -38,7 +38,8 @@ class Api extends CI_Controller {
             // Get All Question....
             if ($_POST['name'] == 'all_question') {
                 $this->load->model('api_quiz');
-                $data = $this->api_quiz->all_question();
+                $limit = $this->input->post('limit');
+                $data = $this->api_quiz->all_question($limit);
                 $file = 'http://quiz.lpktechnosoft.com/admin/Images/question/';
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
@@ -99,7 +100,8 @@ class Api extends CI_Controller {
                 if (isset($_POST['main_cat_id'])) {
                     $this->load->model('api_quiz');
                     $main_cat_id = $_POST['main_cat_id'];
-                    $data = $this->api_quiz->main_category_result($main_cat_id);
+                    $limit = $this->input->post('limit');
+                    $data = $this->api_quiz->main_category_result($main_cat_id, $limit);
                     if ($data) {
                         echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                     } else {
@@ -109,7 +111,8 @@ class Api extends CI_Controller {
                 } elseif (isset($_POST['sub_cat_id'])) {
                     $this->load->model('api_quiz');
                     $sub_cat_id = $_POST['sub_cat_id'];
-                    $data = $this->api_quiz->sub_category_result($sub_cat_id);
+                    $limit = $this->input->post('limit');
+                    $data = $this->api_quiz->sub_category_result($sub_cat_id, $limit);
                     if ($data) {
                         echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                     } else {
@@ -279,7 +282,7 @@ class Api extends CI_Controller {
         $request_auth = $request_auth['Authorization'];
         $Id = '260898';
         $jwt = hash('sha256', $Id . $apiname . $username);
-        echo $jwt;
+        //echo $jwt;
 //$request_auth = 857b5bd1cf4b590032a9fb152a23c7f95c274b83f6554f2571c89dea9721db69
         if ($request_auth == $jwt) {
             return TRUE;
