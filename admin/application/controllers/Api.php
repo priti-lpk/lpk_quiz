@@ -242,12 +242,24 @@ class Api extends CI_Controller {
                 $user_id = $this->input->post('user_id');
                 $right_question = $this->input->post('right_question');
                 $wrong_question = $this->input->post('wrong_question');
-                $score = $this->input->post('score');
-                $data = $this->api_quiz->Store_result($main_cat_id, $sub_cat_id, $user_id, $right_question, $wrong_question, $score);
+                $point = $this->input->post('point');
+                $coin = $this->input->post('coin');
+                $data = $this->api_quiz->Store_result($main_cat_id, $sub_cat_id, $user_id, $right_question, $wrong_question, $point, $coin);
                 if ($data == true) {
                     echo json_encode(array("status" => TRUE, "msg" => "Data Insert Successfully"));
                 } else {
                     echo json_encode(array("status" => FALSE, "msg" => "error"));
+                }
+                die();
+            }
+            if ($_POST['name'] == 'view_point_coin') {
+                $this->load->model('api_quiz');
+                $userid = $this->input->post('user_id');
+                $data = $this->api_quiz->view_point_coin($userid);
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
+                } else {
+                    echo json_encode(array("msg" => "data not found"));
                 }
                 die();
             }
@@ -262,6 +274,48 @@ class Api extends CI_Controller {
                 $selected_ans = $this->input->post('selected_ans');
 
                 $data = $this->api_quiz->user_answer($question_id, $user_id, $selected_ans);
+                if ($data == true) {
+                    echo json_encode(array("status" => TRUE, "msg" => "Data Insert Successfully"));
+                } else {
+                    echo json_encode(array("status" => FALSE, "msg" => "error"));
+                }
+                die();
+            }
+            if ($_POST['name'] == 'send_notification') {
+                $this->load->model('api_quiz');
+                $data = $this->api_quiz->get_token();
+//                $data = $dba->getRow("register_token", array("device_token"), "1");
+             
+                $notification = ["body" => $_POST['name'],
+                    "title" => "Quiz",
+                    "content_available" => true,
+                    "sound" => "default",
+                    "priority" => "high"];
+             
+                $jsonString = $this->sendPushNotificationToGCMSever($data, $notification, "New Recipe", $_POST['name']);
+                $jsonObject = json_decode($jsonString);
+                $jsonObject = json_decode(json_encode($jsonObject), TRUE);
+                $fcmResult = array("fcm_multicast_id" => $jsonObject['multicast_id'],
+                    "fcm_success" => $jsonObject['success'],
+                    "fcm_failure" => $jsonObject['failure'],
+                    "fcm_error" => json_encode(array_column($jsonObject['results'], 'error')),
+                    "fcm_type" => "Quiz",
+                );
+                $msg = '<script>swal("Success!","Apps Notification Results Success: ' . $jsonObject['success'] . ' Failure: ' . $jsonObject['failure'] . '", "success")</script>';
+                $data = $this->api_quiz->firebase_result($fcmResult);   
+
+            }
+            // Insert User Result...
+            if ($_POST['name'] == 'add_token') {
+                unset($_POST['name']);
+                unset($_POST['username']);
+                $this->load->model('api_quiz');
+                $device_id = $this->input->post('device_id');
+                $device_token = $this->input->post('device_token');
+                $token = array("device_id" => $device_id,
+                    "device_token" => $device_token,
+                );
+                $data = $this->api_quiz->add_token($token);
                 if ($data == true) {
                     echo json_encode(array("status" => TRUE, "msg" => "Data Insert Successfully"));
                 } else {
@@ -289,6 +343,37 @@ class Api extends CI_Controller {
         } else {
             return FALSE;
         }
+    }
+
+    function sendPushNotificationToGCMSever($tokenArray, $message, $title, $body) {
+
+        $path_to_firebase_cm = 'https://fcm.googleapis.com/fcm/send';
+
+        $fields = array(
+            'registration_ids' => $tokenArray,
+            'data' => $message,
+            'notification' => $message,
+        );
+        //echo json_encode($fields);
+        $headers = array(
+            'Authorization:key=AAAAHD-LUrQ:APA91bETRZjKDZsZaWTiEaw3xJY2KeFPdXcg15OHxBd3WMLzL9W02hXyBK5ecGyzp-oHhUQ3ti3Xs2Qsn5DZc46rS5qbZHNfrf8Z7sYkCqVepNTrBbasr-8IgqIWMEVzsbn0wxFrS_rs',
+            'Content-Type:application/json'
+        );
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $path_to_firebase_cm);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $result;
     }
 
 }

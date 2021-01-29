@@ -18,6 +18,10 @@ API Methods:
 12)store_result()
 13)user_answer()
 14)update_user_profile()
+15)view_point_coin()
+16)send_notification()
+17)add_token()
+18)get_token()
 What parameters to be Passed?
 
 ->Use POST method to pass the parameters
@@ -50,7 +54,7 @@ What parameters to be Passed?
 
 6)main_category_result
     name : main_category_result
-	main_cat_id : 1
+    main_cat_id : 1
 
     
 7)main_sub_question
@@ -89,7 +93,8 @@ What parameters to be Passed?
 	user_id : 1
 	right_question : 10
 	wrong_question : 5
-	score : 10
+	point : 10
+        coin : 2
 	
 13)user_answer
 	name : user_answer
@@ -101,3 +106,21 @@ What parameters to be Passed?
         name : update_user_profile
         username : xxxx
         image : aa.png
+
+15)view_point_coin
+        name : view_pont_coin
+        username : XXXX
+        usr_id : 1
+
+16)send_notification
+        name : send_notification
+        fcm_multicast_id : 6512227397091801133
+        fcm_success : 1
+        fcm_failure : 0
+        fcm_error : ["Success"]
+        fcm_type : Quiz
+        
+17)add_token
+        name : add_token
+        device_id : 1
+        device_token : 23434
