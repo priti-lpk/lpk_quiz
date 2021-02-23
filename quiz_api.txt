@@ -21,7 +21,8 @@ API Methods:
 15)view_point_coin()
 16)send_notification()
 17)add_token()
-18)get_token()
+18)view_leaderboard()
+
 What parameters to be Passed?
 
 ->Use POST method to pass the parameters
@@ -105,7 +106,8 @@ What parameters to be Passed?
 14)update_user_profile
         name : update_user_profile
         username : xxxx
-        image : aa.png
+        mobile_no : 123654789
+        display_name : kriya
 
 15)view_point_coin
         name : view_pont_coin
@@ -124,3 +126,6 @@ What parameters to be Passed?
         name : add_token
         device_id : 1
         device_token : 23434
+
+18)view_leaderboard
+        name : view_leaderboard

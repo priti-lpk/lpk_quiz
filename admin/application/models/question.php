@@ -169,7 +169,7 @@ class question extends CI_Model {
 
 //-------------------------------------Result---------------------------------//
     public function fetch_result() {
-        $query = $this->db->query("SELECT store_result.id,main_category.main_cat_name,sub_category.sub_cat_name,user_master.username,store_result.right_question,store_result.wrong_question,store_result.score FROM store_result INNER JOIN main_category ON store_result.main_cat_id=main_category.id INNER JOIN sub_category ON store_result.sub_cat_id=sub_category.id INNER JOIN user_master ON store_result.user_id=user_master.id");
+        $query = $this->db->query("SELECT store_result.id,main_category.main_cat_name,sub_category.sub_cat_name,user_master.username,store_result.right_question,store_result.wrong_question,store_result.point,store_result.coin FROM store_result INNER JOIN main_category ON store_result.main_cat_id=main_category.id INNER JOIN sub_category ON store_result.sub_cat_id=sub_category.id INNER JOIN user_master ON store_result.user_id=user_master.id");
         return $query->result();
     }
 

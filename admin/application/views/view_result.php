@@ -71,7 +71,8 @@
                                                         <th>User Name</th>
                                                         <th>Right Question</th>
                                                         <th>Wrong Question</th>
-                                                        <th>Score</th>
+                                                        <th>Point</th>
+                                                        <th>Coin</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -85,7 +86,8 @@
                                                         echo "<td>" . $val->username . "</td>";
                                                         echo "<td>" . $val->right_question . "</td>";
                                                         echo "<td>" . $val->wrong_question . "</td>";
-                                                        echo "<td>" . $val->score . "</td>";
+                                                        echo "<td>" . $val->point . "</td>";
+                                                        echo "<td>" . $val->coin . "</td>";
                                                         echo "</tr>";
                                                     }
                                                     ?>
