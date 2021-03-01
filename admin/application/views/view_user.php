@@ -98,8 +98,14 @@
                                                         echo "<td>" . $val->state_name . "</td>";
                                                         echo "<td>" . $val->city . "</td>";
                                                         echo "<td>" . $val->user_type . "</td>";
-                                                        $img = str_replace("localhost/lpk-quiz/admin/Images/", "", $val->image);
-                                                        echo "<td> <img src=Images/" . $img . " id='image-link' alt='image' class='img-responsive' height=50 width=50 ></td>";
+                                                        // $img = str_replace("http://quiz.lpktechnosoft.com/admin/Images/", "", $val->image);
+                                                        $vall = file_exists('Images/' . $val->image);
+
+                                                        if ($vall) {
+                                                            echo "<td> <img src=Images/" . $val->image . " id='image-link' alt='image' class='img-responsive' height=50 width=50 ></td>";
+                                                        } else {
+                                                            echo "<td> <img src=" . $val->image . " id='image-link' alt='image' class='img-responsive' height=50 width=50 ></td>";
+                                                        }
                                                         echo "<td>" . $val->display_name . "</td>";
 //                                                                    echo "<td><a href='main_category.php?type=edit&id=" . $subData[0] . "' class='btn btn-primary' id='" . $subData[0] . "'><i class='fa fa-edit'></i> Edit</a> <button class='btn btn-danger btn_delete' id='" . $subData[0] . "' onclick='SetForDelete(this.id);'><i class='fa fa-trash-o'>  Delete</button></td>";
 
