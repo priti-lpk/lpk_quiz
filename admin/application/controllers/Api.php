@@ -180,12 +180,12 @@ class Api extends CI_Controller {
                     $username = $this->input->post('username');
                     $address = $this->input->post('address');
                     $mobile_no = $this->input->post('mobile_no');
-                   
+
                     $user_type = $this->input->post('user_type');
                     $image = $this->input->post('image');
                     $display_name = $this->input->post('display_name');
                     $lastID = $this->api_quiz->last_id();
-                    $data = $this->api_quiz->InsertUser($username, $address, $mobile_no,$user_type, $image, $display_name);
+                    $data = $this->api_quiz->InsertUser($username, $address, $mobile_no, $user_type, $image, $display_name);
                     if ($data == true) {
                         echo json_encode(array("status" => TRUE, "id" => $lastID[0]->id + 1, "msg" => "Data Insert Successfully"));
                     } else {
@@ -219,8 +219,8 @@ class Api extends CI_Controller {
                 if (isset($data[0]->username) == $_POST['username']) {
                     $record = array(
                         "image" => $image,
-						"mobile_no" => $this->input->post('mobile_no'),
-                        "display_name" =>$this->input->post('display_name')
+                        "mobile_no" => $this->input->post('mobile_no'),
+                        "display_name" => $this->input->post('display_name')
                     );
 
                     $result = $this->api_quiz->updateUserImage($record, $data[0]->id);
@@ -232,7 +232,7 @@ class Api extends CI_Controller {
                 }
                 die();
             }
-			if ($_POST['name'] == 'update_user_profile') {
+            if ($_POST['name'] == 'update_user_profile') {
                 $this->load->model('api_quiz');
                 $username = $_POST['username'];
                 $data = $this->api_quiz->get_user($username);
@@ -244,7 +244,7 @@ class Api extends CI_Controller {
 
                     $result = $this->api_quiz->updateUserProfile($record, $data[0]->id);
                     if ($result == true) {
-                        echo json_encode(array("status" => TRUE, "id" => $data[0]->id,  "msg" => "Data Update Successfully"));
+                        echo json_encode(array("status" => TRUE, "id" => $data[0]->id, "msg" => "Data Update Successfully"));
                     } else {
                         echo json_encode(array("status" => FALSE, "msg" => "error"));
                     }
@@ -304,13 +304,13 @@ class Api extends CI_Controller {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->get_token();
 //                $data = $dba->getRow("register_token", array("device_token"), "1");
-             
+
                 $notification = ["body" => $_POST['name'],
                     "title" => "Quiz",
                     "content_available" => true,
                     "sound" => "default",
                     "priority" => "high"];
-             
+
                 $jsonString = $this->sendPushNotificationToGCMSever($data, $notification, "New Recipe", $_POST['name']);
                 $jsonObject = json_decode($jsonString);
                 $jsonObject = json_decode(json_encode($jsonObject), TRUE);
@@ -321,8 +321,7 @@ class Api extends CI_Controller {
                     "fcm_type" => "Quiz",
                 );
                 $msg = '<script>swal("Success!","Apps Notification Results Success: ' . $jsonObject['success'] . ' Failure: ' . $jsonObject['failure'] . '", "success")</script>';
-                $data = $this->api_quiz->firebase_result($fcmResult);   
-
+                $data = $this->api_quiz->firebase_result($fcmResult);
             }
             // Insert User Result...
             if ($_POST['name'] == 'add_token') {
@@ -342,12 +341,55 @@ class Api extends CI_Controller {
                 }
                 die();
             }
-			// view leaderboard
-			if ($_POST['name'] == 'view_leaderboard') {
+            // view leaderboard
+            if ($_POST['name'] == 'view_leaderboard') {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->view_leaderboard();
+                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
                 if ($data) {
-                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("msg" => "data not found"));
+                }
+                die();
+            }
+            //  View_Daily_Leaderboard_Report
+            if ($_POST['name'] == 'View_Daily_Leaderboard_Report') {
+                $this->load->model('api_quiz');
+                $date = date('Y-m-d');
+               
+                $data = $this->api_quiz->View_Daily_Leaderboard_Report($date);
+                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("msg" => "data not found"));
+                }
+                die();
+            }
+            //View Yearly Leaderboard Report
+            if ($_POST['name'] == 'View_Yearly_Leaderboard_Report') {
+                $this->load->model('api_quiz');
+                $year = date('Y');
+                $data = $this->api_quiz->View_Yearly_Leaderboard_Report($year);
+                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("msg" => "data not found"));
+                }
+                die();
+            }
+            //View Monthly Leaderboard Report
+            if ($_POST['name'] == 'View_Monthly_Leaderboard_Report') {
+                $this->load->model('api_quiz');
+                $month_year = explode('-', $this->input->post('month_year'));
+                $month = date('m');
+                $year = date('Y');
+                $data = $this->api_quiz->View_Monthly_Leaderboard_Report($month,$year);
+                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
                     echo json_encode(array("msg" => "data not found"));
                 }
@@ -366,7 +408,7 @@ class Api extends CI_Controller {
         $request_auth = $request_auth['Authorization'];
         $Id = '260898';
         $jwt = hash('sha256', $Id . $apiname . $username);
-        //echo $jwt;
+        echo $jwt;
 //$request_auth = 857b5bd1cf4b590032a9fb152a23c7f95c274b83f6554f2571c89dea9721db69
         if ($request_auth == $jwt) {
             return TRUE;

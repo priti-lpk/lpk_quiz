@@ -44,6 +44,16 @@
             <li>
                 <a href="<?php echo base_url('daily_mission') ?>" class="waves-effect"><i class="mdi mdi-calendar-check"></i><span> Daily Mission </span></a>
             </li>
+            <li>
+                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-grid"></i><span> Report <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                <ul class="submenu">
+                    
+                    
+                    <li><a href="<?php echo base_url('View_Daily_Leaderboard_Report') ?>">View Daily Leaderboard</a></li>
+                    <li><a href="<?php echo base_url('View_Monthly_Leaderboard_Report') ?>">View Monthly Leaderboard</a></li>
+                    <li><a href="<?php echo base_url('View_Yearly_Leaderboard_Report') ?>">View Yearly Leaderboard</a></li>
+                </ul>
+            </li>
         </ul>
 
     </div>
