@@ -10,7 +10,7 @@ class LoginModel extends CI_Model {
     }
 
     public function Loginn($username, $password) {
-       
+
         $this->db->select('*');
         $this->db->from('admin');
         $this->db->where('username', $username);
@@ -27,6 +27,34 @@ class LoginModel extends CI_Model {
             }
         } else {
             return false;
+        }
+    }
+
+    public function fetch_site_data() {
+        $this->db->select('*');
+        $this->db->from('setting');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function InsertSetting($record) {
+
+        $query = $this->db->insert('setting', $record);
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSetting($record, $id) {
+        $this->db->trans_start();
+        $this->db->where("id", $id);
+        $this->db->update("setting", $record);
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -78,8 +78,7 @@
                                                             ?>
                                                         </select>
                                                     </div>
-                                                    <!--                                                </div>
-                                                                                                    <div class="form-group row">-->
+
                                                     <label for="example-text-input" class="col-sm-2 col-form-label">Sub Category</label>
                                                     <div class="col-sm-4" id="sub_list">
                                                         <select class="form-control select2" name="sub_cat_id" id="sub_cat_id" required="">
@@ -93,13 +92,20 @@
                                                     </div>
                                                 </div>
                                                 <div class = "form-group row">
-                                                    <label for = "example-text-input" class = "col-sm-2 col-form-label">Time</label>
+                                                    <label for = "example-text-input" class = "col-sm-2 col-form-label">Second</label>
                                                     <div class = "col-sm-4">
-                                                        <input class = "form-control" type = "text" placeholder = "Time" name = "time" id = "time1" value="<?php echo (isset($edit_question) ? $edit_question[0]['time'] : ''); ?>" required = "">
+                                                        <input class = "form-control" type = "text" placeholder = "Second" name = "time" id = "time1" value="<?php echo (isset($edit_question) ? $edit_question[0]['time'] : ''); ?>" required = "">
                                                     </div>
                                                     <label for = "example-text-input" class = "col-sm-2 col-form-label">Score</label>
                                                     <div class = "col-sm-4">
                                                         <input class = "form-control" type = "text" placeholder = "Score" name = "score" id = "score" value="<?php echo (isset($edit_question) ? $edit_question[0]['score'] : ''); ?>" required = "">
+                                                    </div>
+                                                </div>
+                                                <div class = "form-group row">
+                                                    
+                                                    <label for = "example-text-input" class = "col-sm-2 col-form-label">Description</label>
+                                                    <div class = "col-sm-10">
+                                                        <textarea class = "form-control" type = "text" placeholder = "Description" name = "description" id = "description"  required = ""><?php echo (isset($edit_question) ? $edit_question[0]['description'] : ''); ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class = "button-items">

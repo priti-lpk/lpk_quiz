@@ -6,7 +6,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>View_Monthly_Leaderboard_Report</title>
+        <title>View Monthly Leaderboard Report</title>
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />
         <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">View_Monthly_Leaderboard_Report</h4>
+                                    <h4 class="page-title">View Monthly Leaderboard Report</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                     <div class="card m-b-20">
                                         <div class="card-body">
 
-                                            <h4 class="mt-0 header-title">View_Monthly_Leaderboard_Report</h4>
+                                            <h4 class="mt-0 header-title">View Monthly Leaderboard Report</h4>
                                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead>
                                                     <tr>

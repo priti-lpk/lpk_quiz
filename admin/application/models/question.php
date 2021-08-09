@@ -122,7 +122,7 @@ class question extends CI_Model {
     }
 
     public function fetch_quize_schedule($sid, $mid) {
-        $query = $this->db->query("SELECT quiz_schedule.id,quiz_schedule.title,quiz_schedule.schedule_date,main_category.main_cat_name,sub_category.sub_cat_name,countries.cname,states.state_name,quiz_schedule.description FROM quiz_schedule INNER JOIN main_category ON quiz_schedule.main_cat_id=main_category.id LEFT JOIN sub_category ON quiz_schedule.sub_cat_id=sub_category.id INNER JOIN countries ON quiz_schedule.country_id=countries.id INNER JOIN states ON quiz_schedule.state_id=states.id where quiz_Schedule.main_cat_id='" . $mid . "' AND quiz_schedule.sub_cat_id='" . $sid . "'");
+        $query = $this->db->query("SELECT quiz_schedule.id,quiz_schedule.title,quiz_schedule.schedule_date,main_category.main_cat_name,sub_category.sub_cat_name,countries.cname,states.state_name,quiz_schedule.description FROM quiz_schedule INNER JOIN main_category ON quiz_schedule.main_cat_id=main_category.id LEFT JOIN sub_category ON quiz_schedule.sub_cat_id=sub_category.id INNER JOIN countries ON quiz_schedule.country_id=countries.id INNER JOIN states ON quiz_schedule.state_id=states.id where quiz_schedule.main_cat_id='" . $mid . "' AND quiz_schedule.sub_cat_id='" . $sid . "'");
         return $query->result();
     }
 
@@ -169,7 +169,13 @@ class question extends CI_Model {
 
 //-------------------------------------Result---------------------------------//
     public function fetch_result() {
-        $query = $this->db->query("SELECT store_result.id,main_category.main_cat_name,sub_category.sub_cat_name,user_master.username,store_result.right_question,store_result.wrong_question,store_result.point,store_result.coin FROM store_result INNER JOIN main_category ON store_result.main_cat_id=main_category.id INNER JOIN sub_category ON store_result.sub_cat_id=sub_category.id INNER JOIN user_master ON store_result.user_id=user_master.id");
+        $query = $this->db->query("SELECT s.id,u.display_name,m.main_cat_name,sc.sub_cat_name,sum(s.right_question) as right_question,sum(s.wrong_question) as wrong_question,sum(s.point) as point,sum(s.coin) as coin,(case when (s.main_cat_id = '-1') 
+ THEN
+      'Mission Quiz'
+ ELSE
+      COALESCE(m.main_cat_name,'Random Quiz')
+ END)
+ as main_cat_name FROM store_result s left join main_category m on m.id=s.main_cat_id INNER JOIN user_master u on u.id=s.user_id left JOIN sub_category sc on sc.id=s.sub_cat_id GROUP BY u.id,m.id,sc.id");
         return $query->result();
     }
 

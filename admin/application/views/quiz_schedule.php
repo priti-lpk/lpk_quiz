@@ -93,8 +93,8 @@
                                                     <!--                                                </div>
                                                                                                     <div class="form-group row">-->
                                                     <label for="example-text-input" class="col-sm-2 col-form-label">State</label>
-                                                    <div class="col-sm-4" id="state_list">
-                                                        <select class="form-control select2" name="state_id" id="states" required="">
+                                                    <div class="col-sm-4">
+                                                        <select class="form-control select2" name="state_id" id="state_list" required="">
                                                             <option>Select State</option>
                                                             <?php
                                                             $city = $datas[0][5];
@@ -123,8 +123,8 @@
                                                     <!--                                                </div>
                                                                                                     <div class="form-group row">-->
                                                     <label for="example-text-input" class="col-sm-2 col-form-label">Sub Category</label>
-                                                    <div class="col-sm-4" id="sub_list">
-                                                        <select class="form-control select2" name="sub_cat_id" id="sub_cat_id" required="">
+                                                    <div class="col-sm-4">
+                                                        <select class="form-control select2" name="sub_cat_id" id="sub_list" required="">
                                                             <option>Select Sub Category</option>
                                                             <?php
                                                             foreach ($sub_category as $val) {

@@ -1,6 +1,6 @@
 <?php
 
-class mission extends CI_Model {
+class Mission extends CI_Model {
 
     public function Insertmission($data) {
         $this->db->insert('daily_mission', $data);
@@ -32,10 +32,12 @@ class mission extends CI_Model {
     }
 
     public function fetch_sub_category_data1($id) {
-        $query1 = $this->db->query("SELECT main_cat_id FROM question_master where id=" . $id);
+        $query1 = $this->db->query("SELECT main_cat_id FROM daily_mission where id=" . $id);
         $s = $query1->result();
+
         $query = $this->db->query("SELECT * FROM sub_category where status='1' And main_cat_id=" . $s[0]->main_cat_id);
         return $query->result();
+//        return $this->db->last_query();
     }
 
     function update_mission($data, $id) {
@@ -47,6 +49,20 @@ class mission extends CI_Model {
 
         $this->db->where('id', $id);
         $this->db->delete('daily_mission');
+    }
+
+    public function get_sub_category($id) {
+
+        $this->db->select('s.*');
+        $this->db->from('sub_category as s');
+        $this->db->join('question_master as q', 'q.sub_cat_id = s.id');
+        $this->db->where('s.main_cat_id', $id);
+        $this->db->group_by("s.id");
+
+        $query = $this->db->get();
+       
+//        return $this->db->last_query();
+        return $query->result();
     }
 
 }

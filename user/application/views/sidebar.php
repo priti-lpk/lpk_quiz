@@ -6,7 +6,7 @@
         <!-- Left Menu Start -->
         <ul class="metismenu" id="side-menu">
             <li>
-                <a href="<?php echo base_url('Index') ?>" class="waves-effect">
+                <a href="<?php echo base_url('Index/dashboard') ?>" class="waves-effect">
                     <i class="mdi mdi-home"></i><span> Dashboard </span>
                 </a>
             </li>

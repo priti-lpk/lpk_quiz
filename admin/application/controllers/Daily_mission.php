@@ -44,6 +44,7 @@ class Daily_mission extends CI_Controller {
                 'sub_cat_id' => $this->input->post('sub_cat_id'),
                 'time' => $this->input->post('time'),
                 'score' => $this->input->post('score'),
+                'description' => $this->input->post('description')
             );
             $this->Mission->Insertmission($data);
             redirect(base_url(daily_mission));
@@ -55,6 +56,7 @@ class Daily_mission extends CI_Controller {
                 "sub_cat_id" => $this->input->post('sub_cat_id'),
                 "time" => $this->input->post('time'),
                 "score" => $this->input->post('score'),
+                'description' => $this->input->post('description')
             );
             $this->Mission->update_mission($data, $id);
             redirect(base_url(daily_mission));

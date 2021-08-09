@@ -26,12 +26,7 @@
             <li>
                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-grid"></i><span> View <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
                 <ul class="submenu">
-                    <!--                        <li><a href="view_main_category.php">Main Category</a></li>
-                                            <li><a href="view_sub_category.php">Sub Category</a></li>
-                                            <li><a href="view_tag_list.php">Tag List</a></li>
-                                            <li><a href="view_country_list.php">Country List</a></li>
-                                            <li><a href="view_state_list.php">State List</a></li>
-                                            <li><a href="view_all_question.php">All Question</a></li>-->
+
                     <li><a href="<?php echo base_url('View_user') ?>">User</a></li>
                     <li><a href="<?php echo base_url('View_quiz_schedule') ?>">Quiz Schedule</a></li>
                     <li><a href="<?php echo base_url('View_category_question') ?>">Category Wise Question</a></li>
@@ -47,15 +42,20 @@
             <li>
                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-grid"></i><span> Report <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
                 <ul class="submenu">
-                    
-                    
+
+
                     <li><a href="<?php echo base_url('View_Daily_Leaderboard_Report') ?>">View Daily Leaderboard</a></li>
                     <li><a href="<?php echo base_url('View_Monthly_Leaderboard_Report') ?>">View Monthly Leaderboard</a></li>
                     <li><a href="<?php echo base_url('View_Yearly_Leaderboard_Report') ?>">View Yearly Leaderboard</a></li>
                 </ul>
             </li>
+            <li>
+            <a href="<?php echo base_url('setting') ?>" class="waves-effect">
+                <i class="mdi mdi-home"></i><span> Setting </span>
+            </a>
+        </li>
         </ul>
-
+        
     </div>
     <!-- sidebar -->
     <div class="clearfix"></div>

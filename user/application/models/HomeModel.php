@@ -209,14 +209,26 @@ class HomeModel extends CI_Model {
         $query = $this->db->query("SELECT add_newuser.id,add_newuser.user,main_category.main_cat_name,add_newuser.sub_cat_id,GROUP_CONCAT(DISTINCT sub_category.sub_cat_name) as sub_cat_name FROM add_newuser INNER JOIN main_category ON add_newuser.main_cat_id=main_category.id INNER join sub_category ON FIND_IN_SET(sub_category.ID, add_newuser.sub_cat_id) > 0 GROUP BY add_newuser.id");
 //        SELECT a.sub_cat_id, GROUP_CONCAT(s.sub_cat_name) as name FROM add_newuser a INNER JOIN sub_category s ON FIND_IN_SET(s.ID, a.sub_cat_id) > 0 GROUP BY a.sub_cat_id 
         return $query->result();
-       
     }
-      public function getscat($main_cat_id) {
+
+    public function getscat($main_cat_id) {
         $query = $this->db->query("SELECT * FROM sub_category where main_cat_id='" . $main_cat_id . "' and status='1'");
         return $query->result();
     }
-    
+
+    function update_pass($data, $id) {
+        $this->db->where("id", $id);
+        $this->db->update("add_newuser", $data);
+        return true;
+    }
+
+    public function get_setting() {
+
+        $this->db->select('*');
+        $this->db->from('setting');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
 ?>
-

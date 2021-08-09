@@ -27,24 +27,24 @@ class Api extends CI_Controller {
             if ($_POST['name'] == 'main_category') {
                 $this->load->model('api_quiz');
                 $datas = $this->api_quiz->main_category();
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $file = base_url('Images/');
                 if ($datas) {
                     echo json_encode(array("status" => TRUE, "data" => $datas, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
             // Get All Question....
             if ($_POST['name'] == 'all_question') {
                 $this->load->model('api_quiz');
-                $limit = $this->input->post('limit');
-                $data = $this->api_quiz->all_question($limit);
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/question/';
+
+                $data = $this->api_quiz->all_question();
+                $file = base_url('/Images/question/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -52,11 +52,11 @@ class Api extends CI_Controller {
             if ($_POST['name'] == 'count_selected_answer') {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->count_selected_answer();
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/question/';
+                $file = base_url('Images/question/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -67,7 +67,7 @@ class Api extends CI_Controller {
                 if ($datas) {
                     echo json_encode(array("status" => TRUE, "data" => $datas, "msg" => "data get successfully"));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -75,11 +75,11 @@ class Api extends CI_Controller {
             if ($_POST['name'] == 'view_user') {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->view_user();
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $file = base_url('Images/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -87,11 +87,12 @@ class Api extends CI_Controller {
             if ($_POST['name'] == 'main_category_result') {
                 $this->load->model('api_quiz');
                 $main_cat_id = $_POST['main_cat_id'];
-                $data = $this->api_quiz->main_category_result($main_cat_id);
+                $limit = $_POST['limit'];
+                $data = $this->api_quiz->main_category_result($main_cat_id, $limit);
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -105,7 +106,7 @@ class Api extends CI_Controller {
                     if ($data) {
                         echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                     } else {
-                        echo json_encode(array("msg" => "data not found"));
+                        echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                     }
                     die();
                 } elseif (isset($_POST['sub_cat_id'])) {
@@ -116,7 +117,7 @@ class Api extends CI_Controller {
                     if ($data) {
                         echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                     } else {
-                        echo json_encode(array("msg" => "data not found"));
+                        echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                     }
                     die();
                 }
@@ -128,13 +129,26 @@ class Api extends CI_Controller {
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
             if ($_POST['name'] == 'view_mission') {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->quiz_mission();
+                $file = base_url('Images/');
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
+                }
+                die();
+            }
+
+            if ($_POST['name'] == 'get_mission_question') {
+                $this->load->model('api_quiz');
+                $id = $this->input->post('mission_id');
+                $data = $this->api_quiz->get_mission_question($id);
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                 } else {
@@ -142,6 +156,7 @@ class Api extends CI_Controller {
                 }
                 die();
             }
+
             // Get random 10 question...
             if ($_POST['name'] == 'question_result') {
                 $this->load->model('api_quiz');
@@ -149,7 +164,7 @@ class Api extends CI_Controller {
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                 } else {
-                    echo json_encode(array("msg" => "data not foound"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not foound"));
                 }
                 die();
             }
@@ -160,34 +175,28 @@ class Api extends CI_Controller {
                 $username = $_POST['username'];
                 $data = $this->api_quiz->get_user($username);
                 if (isset($data[0]->username) == $_POST['username']) {
-                    $record = array(
-                        "username" => $this->input->post('username'),
-                        "address" => $this->input->post('address'),
-                        "mobile_no" => $this->input->post('mobile_no'),
-                        "country_id" => $this->input->post('country_id'),
-                        "state_id" => $this->input->post('state_id'),
-                        "city" => $this->input->post('city'),
-                        "image" => $this->input->post('image'),
-                        "display_name" => $this->input->post('display_name')
-                    );
-                    $result = $this->api_quiz->updateUser($record, $data[0]->id);
+                    $result = $this->api_quiz->get_user($username);
+
                     if ($result) {
-                        echo json_encode(array("status" => TRUE, "id" => $data[0]->id, "msg" => "Data Update Successfully"));
+                        echo json_encode(array("status" => TRUE, "user_id" => $result[0]->id, "username" => $result[0]->username, "address" => $result[0]->address, "mobile_no" => $result[0]->mobile_no, "user_type" => $result[0]->user_type, "image" => $result[0]->image, "display_name" => $result[0]->display_name, "msg" => "Data get Successfully"));
                     } else {
                         echo json_encode(array("status" => FALSE, "msg" => "error"));
                     }
                 } else {
-                    $username = $this->input->post('username');
-                    $address = $this->input->post('address');
-                    $mobile_no = $this->input->post('mobile_no');
 
-                    $user_type = $this->input->post('user_type');
-                    $image = $this->input->post('image');
-                    $display_name = $this->input->post('display_name');
-                    $lastID = $this->api_quiz->last_id();
-                    $data = $this->api_quiz->InsertUser($username, $address, $mobile_no, $user_type, $image, $display_name);
-                    if ($data == true) {
-                        echo json_encode(array("status" => TRUE, "id" => $lastID[0]->id + 1, "msg" => "Data Insert Successfully"));
+                    $record = array(
+                        "username" => $this->input->post('username'),
+                        "address" => $this->input->post('address'),
+                        "mobile_no" => $this->input->post('mobile_no'),
+                        "user_type" => $this->input->post('user_type'),
+                        "image" => $this->input->post('image'),
+                        "display_name" => $this->input->post('display_name')
+                    );
+                    $data = $this->api_quiz->InsertUser($record);
+                    $result = $this->api_quiz->get_user($username);
+
+                    if ($result == true) {
+                        echo json_encode(array("status" => TRUE, "user_id" => $result[0]->id, "username" => $result[0]->username, "address" => $result[0]->address, "mobile_no" => $result[0]->mobile_no, "user_type" => $result[0]->user_type, "image" => $result[0]->image, "display_name" => $result[0]->display_name, "msg" => "Data Insert Successfully"));
                     } else {
                         echo json_encode(array("status" => FALSE, "msg" => "error"));
                     }
@@ -219,13 +228,11 @@ class Api extends CI_Controller {
                 if (isset($data[0]->username) == $_POST['username']) {
                     $record = array(
                         "image" => $image,
-                        "mobile_no" => $this->input->post('mobile_no'),
-                        "display_name" => $this->input->post('display_name')
                     );
 
                     $result = $this->api_quiz->updateUserImage($record, $data[0]->id);
                     if ($result == true) {
-                        echo json_encode(array("status" => TRUE, "id" => $data[0]->id, "ImageURL" => $image, "msg" => "Data Update Successfully"));
+                        echo json_encode(array("status" => TRUE, "id" => $data[0]->id, "ImageURL" => base_url('Images/'.$image), "msg" => "Data Update Successfully"));
                     } else {
                         echo json_encode(array("status" => FALSE, "msg" => "error"));
                     }
@@ -256,14 +263,20 @@ class Api extends CI_Controller {
                 unset($_POST['name']);
                 unset($_POST['username']);
                 $this->load->model('api_quiz');
-//                $main_cat_id = $this->input->post('main_cat_id');
-//                $sub_cat_id = $this->input->post('sub_cat_id');
                 $user_id = $this->input->post('user_id');
-                $right_question = $this->input->post('right_question');
-                $wrong_question = $this->input->post('wrong_question');
-                $point = $this->input->post('point');
-                $coin = $this->input->post('coin');
-                $data = $this->api_quiz->Store_result($user_id, $right_question, $wrong_question, $point, $coin);
+                $main_cat_id = $this->input->post('main_cat_id');
+                $sub_cat_id = $this->input->post('sub_cat_id');
+                $record = array(
+                    'user_id' => $this->input->post('user_id'),
+                    'main_cat_id' => $this->input->post('main_cat_id'),
+                    'sub_cat_id' => $this->input->post('sub_cat_id'),
+                    'right_question' => $this->input->post('right_question'),
+                    'wrong_question' => $this->input->post('wrong_question'),
+                    'point' => $this->input->post('point'),
+                    'coin' => $this->input->post('coin'),
+                    'datetime' => date('Y-m-d')
+                );
+                $data = $this->api_quiz->Store_result($record, $user_id, $main_cat_id, $sub_cat_id);
                 if ($data == true) {
                     echo json_encode(array("status" => TRUE, "msg" => "Data Insert Successfully"));
                 } else {
@@ -278,7 +291,7 @@ class Api extends CI_Controller {
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully"));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -288,11 +301,13 @@ class Api extends CI_Controller {
                 unset($_POST['name']);
                 unset($_POST['username']);
                 $this->load->model('api_quiz');
-                $question_id = $this->input->post('question_id');
-                $user_id = $this->input->post('user_id');
-                $selected_ans = $this->input->post('selected_ans');
 
-                $data = $this->api_quiz->user_answer($question_id, $user_id, $selected_ans);
+                $record = array(
+                    "user_id" => $this->input->post('user_id'),
+                    "question_id" => $this->input->post('question_id'),
+                    "selected_ans" => $this->input->post('selected_ans')
+                );
+                $data = $this->api_quiz->user_answer($record);
                 if ($data == true) {
                     echo json_encode(array("status" => TRUE, "msg" => "Data Insert Successfully"));
                 } else {
@@ -300,29 +315,7 @@ class Api extends CI_Controller {
                 }
                 die();
             }
-            if ($_POST['name'] == 'send_notification') {
-                $this->load->model('api_quiz');
-                $data = $this->api_quiz->get_token();
-//                $data = $dba->getRow("register_token", array("device_token"), "1");
-
-                $notification = ["body" => $_POST['name'],
-                    "title" => "Quiz",
-                    "content_available" => true,
-                    "sound" => "default",
-                    "priority" => "high"];
-
-                $jsonString = $this->sendPushNotificationToGCMSever($data, $notification, "New Recipe", $_POST['name']);
-                $jsonObject = json_decode($jsonString);
-                $jsonObject = json_decode(json_encode($jsonObject), TRUE);
-                $fcmResult = array("fcm_multicast_id" => $jsonObject['multicast_id'],
-                    "fcm_success" => $jsonObject['success'],
-                    "fcm_failure" => $jsonObject['failure'],
-                    "fcm_error" => json_encode(array_column($jsonObject['results'], 'error')),
-                    "fcm_type" => "Quiz",
-                );
-                $msg = '<script>swal("Success!","Apps Notification Results Success: ' . $jsonObject['success'] . ' Failure: ' . $jsonObject['failure'] . '", "success")</script>';
-                $data = $this->api_quiz->firebase_result($fcmResult);
-            }
+         
             // Insert User Result...
             if ($_POST['name'] == 'add_token') {
                 unset($_POST['name']);
@@ -345,25 +338,24 @@ class Api extends CI_Controller {
             if ($_POST['name'] == 'view_leaderboard') {
                 $this->load->model('api_quiz');
                 $data = $this->api_quiz->view_leaderboard();
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $file = base_url('Images/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
             //  View_Daily_Leaderboard_Report
             if ($_POST['name'] == 'View_Daily_Leaderboard_Report') {
                 $this->load->model('api_quiz');
-                $date = date('Y-m-d');
-               
+                $date = $date = date('Y-m-d');
                 $data = $this->api_quiz->View_Daily_Leaderboard_Report($date);
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $file = base_url('Images/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
@@ -372,26 +364,62 @@ class Api extends CI_Controller {
                 $this->load->model('api_quiz');
                 $year = date('Y');
                 $data = $this->api_quiz->View_Yearly_Leaderboard_Report($year);
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $file = base_url('Images/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }
             //View Monthly Leaderboard Report
             if ($_POST['name'] == 'View_Monthly_Leaderboard_Report') {
                 $this->load->model('api_quiz');
-                $month_year = explode('-', $this->input->post('month_year'));
                 $month = date('m');
                 $year = date('Y');
-                $data = $this->api_quiz->View_Monthly_Leaderboard_Report($month,$year);
-                $file = 'http://quiz.lpktechnosoft.com/admin/Images/';
+                $data = $this->api_quiz->View_Monthly_Leaderboard_Report($month, $year);
+                $file = base_url('Images/');
                 if ($data) {
                     echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
                 } else {
-                    echo json_encode(array("msg" => "data not found"));
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
+                }
+                die();
+            }
+            if ($_POST['name'] == 'score_history') {
+                $this->load->model('api_quiz');
+                $id = $this->input->post('user_id');
+                $data = $this->api_quiz->get_Score($id);
+                $file = base_url('Images/');
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
+                }
+                die();
+            }
+            //get user wise data
+            if ($_POST['name'] == 'get_user_data') {
+                $this->load->model('api_quiz');
+                $id = $this->input->post('user_id');
+                $data = $this->api_quiz->get_user_data($id);
+                $file = base_url('Images/');
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
+                }
+                die();
+            }
+            if ($_POST['name'] == 'get_site_setting') {
+                $this->load->model('api_quiz');
+              
+                $data = $this->api_quiz->get_setting();
+                $file = base_url('Images/');
+                if ($data) {
+                    echo json_encode(array("status" => TRUE, "data" => $data, "msg" => "data get successfully", "imageurl" => $file));
+                } else {
+                    echo json_encode(array("status" => TRUE, "msg" => "data not found"));
                 }
                 die();
             }

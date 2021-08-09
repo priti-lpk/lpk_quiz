@@ -93,8 +93,8 @@
                                                     <label for="example-text-input" class="col-sm-2 col-form-label">Sub Category</label>
                                                     <input type="hidden" id="main_cat_id1"  name="main_cat_id" class="form-control">
 
-                                                    <div class="col-sm-5" id="sub_list">       
-                                                        <select class="form-control select2" name="sub_cat_id" id="sub_cat_id" required="">
+                                                    <div class="col-sm-5">       
+                                                        <select class="form-control select2" name="sub_cat_id" id="sub_list" required="">
                                                             <option>Sub Category</option>
                                                             <?php
                                                             foreach ($sub_category as $val) {

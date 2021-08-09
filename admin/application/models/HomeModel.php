@@ -3,9 +3,13 @@
 class HomeModel extends CI_Model {
 
 //--------------------Main category------------------------//
-    public function InsertMaincategory($main_cat_name, $img, $status) {
-        $query = "insert into main_category(main_cat_name,main_image,status)values('$main_cat_name','$img','$status')";
-        $this->db->query($query);
+    public function InsertMaincategory($record) {
+        $query = $this->db->insert('main_category', $record);
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getCategoryLastId() {
@@ -16,16 +20,22 @@ class HomeModel extends CI_Model {
     function update_main_category($data, $id) {
         $this->db->where("id", $id);
         $this->db->update("main_category", $data);
+
         //UPDATE tbl_user SET first_name = '$first_name', last_name = '$last_name' WHERE id = '$id'  
     }
 
     public function fetch_main_category_data() {
-        $query = $this->db->query("SELECT * FROM main_category where 1");
+        $this->db->select('*');
+        $this->db->from('main_category');
+        $query = $this->db->get();
         return $query->result();
     }
 
     public function update_maincategory_data($id) {
-        $query = $this->db->query("SELECT * FROM main_category where id=" . $id);
+        $this->db->select('*');
+        $this->db->where("id", $id);
+        $this->db->from('main_category');
+        $query = $this->db->get();
         return $query->result_array();
     }
 
@@ -42,18 +52,30 @@ class HomeModel extends CI_Model {
 
 //---------------Sub_category------------------------//
     public function fetch_sub_main_category_data() {
-        $query = $this->db->query("SELECT id,main_cat_name FROM main_category where status=1");
+        $this->db->select('id,main_cat_name');
+        $this->db->where("status", '1');
+        $this->db->from('main_category');
+        $query = $this->db->get();
         return $query->result();
     }
 
     public function fetch_sub_category_data() {
-        $query = $this->db->query("SELECT s.*,m.main_cat_name FROM sub_category s inner join main_category m on m.id = s.main_cat_id where 1");
+
+        $this->db->select('s.*,m.main_cat_name');
+        $this->db->from('sub_category as s');
+        $this->db->join('main_category as m', 'm.id = s.main_cat_id');
+        $query = $this->db->get();
         return $query->result();
     }
 
-    public function InsertSubcategory($main_cat_id, $sub_cat_name, $img, $status) {
-        $query = "insert into sub_category(main_cat_id,sub_cat_name,sub_image,status)values($main_cat_id, '$sub_cat_name', '$img', '$status')";
-        $this->db->query($query);
+    public function InsertSubcategory($record) {
+        $query = $this->db->insert('sub_category', $record);
+        if ($query) {
+            return true;
+        } else {
+            return false;
+        }
+       
     }
 
     public function getSubCategoryLastId() {
@@ -207,27 +229,8 @@ class HomeModel extends CI_Model {
 
     public function fetch_user_data() {
         $query = $this->db->query("SELECT add_newuser.id,add_newuser.user,main_category.main_cat_name,add_newuser.sub_cat_id,GROUP_CONCAT(DISTINCT sub_category.sub_cat_name) as sub_cat_name FROM add_newuser INNER JOIN main_category ON add_newuser.main_cat_id=main_category.id INNER join sub_category ON FIND_IN_SET(sub_category.ID, add_newuser.sub_cat_id) > 0 GROUP BY add_newuser.id");
-//        SELECT a.sub_cat_id, GROUP_CONCAT(s.sub_cat_name) as name FROM add_newuser a INNER JOIN sub_category s ON FIND_IN_SET(s.ID, a.sub_cat_id) > 0 GROUP BY a.sub_cat_id 
+
         return $query->result();
-//        $query = $this->db->query("SELECT add_newuser.id,add_newuser.user,main_category.main_cat_name,add_newuser.sub_cat_id FROM add_newuser INNER JOIN main_category ON add_newuser.main_cat_id=main_category.id");
-//
-//        $res = $query->result_array();
-//        $c = count($res);
-//        $module = array();
-//        for ($i = 0; $i < $c; $i++) {
-//            $subid = $res[$i]['sub_cat_id'];
-//            $userarray = explode(',', $subid);
-//            foreach ($userarray as $value) {
-//                $query1 = $this->db->query("SELECT sub_cat_name FROM sub_category where id=" . $value);
-//                $q = $query1->result_array();
-//                $module[$i] = $q;
-//            }
-//        }
-//        $q1 = $query->result_array();
-//        return array(
-//            'sub_cat_name' => $module,
-//            'sub_data' => $q1,
-//        );
     }
 
     public function getscat($main_cat_id) {
@@ -259,6 +262,21 @@ class HomeModel extends CI_Model {
         );
     }
 
-}
-?>
+    function update_pass($data, $id) {
+        $this->db->where("username", $id);
+        $this->db->update("admin", $data);
+        return true;
+        //UPDATE admin SET status = 'Complete' WHERE id = '1'  
+    }
 
+    public function get_setting() {
+
+        $this->db->select('*');
+        $this->db->from('setting');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+}
+
+?>
